@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <errno.h>
 
 #include "lib/rplidar/include/rplidar.h"
 #include "interface.h"
@@ -27,8 +28,15 @@ int lidarUse ( const char * path, const uint32_t baudRate, const float offsetAng
 {
 	u_result op_result;
 
-	RPlidarDriver * drv = RPlidarDriver::CreateDriver(RPlidarDriver::DRIVER_TYPE_SERIALPORT);
+	if ( !path ||
+		!*path ||
+		!detection ||
+		!stop )
+	{
+		errno = EINVAL;
+	}
 
+	RPlidarDriver * drv = RPlidarDriver::CreateDriver(RPlidarDriver::DRIVER_TYPE_SERIALPORT);
 	if ( !drv )
 	{
 		return ( __LINE__ );

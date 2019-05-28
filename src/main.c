@@ -30,7 +30,7 @@ int main ( int argc, char ** argv )
 	float offsetAngle = 0.0;
 	int err = 0;
 
-	char * port = NULL;
+	char port[128] = { 0 };
 
 	// INIT_VAR
 	signalHandling signal =
@@ -80,7 +80,7 @@ int main ( int argc, char ** argv )
 	{
 		{ "ANGLE_OFFSET", cT ( float ), &offsetAngle, "angle offset from the 0" },
 		{ "SHARED_MEME_KEY", cT ( uint32_t ), &memKey, "shared memory key" },
-		{ "DEVICE", cT ( ptrStr ), &port, "shared memory key" },
+		{ "DEVICE", cT ( str ), port, "shared memory key" },
 		{ NULL }
 	};
  
@@ -98,7 +98,7 @@ int main ( int argc, char ** argv )
 		#endif
 		{ "--angleOffset", "-oA", 1, cT ( float ), &offsetAngle, "angle offset from the 0" },
 		{ "--memKey", "-k", 1, cT ( uint32_t ), &memKey, "shared memory key" },
-		{ "--port", "-p", 1, cT ( ptrStr ), &port, "shared memory key" },
+		{ "--port", "-p", 1, cT ( str ), port, "shared memory key" },
 		{ NULL }
 	};
  
@@ -117,8 +117,8 @@ int main ( int argc, char ** argv )
 	
 	// INIT_CONFIG
 	if ( readConfigFile ( "res/detection.config", config ) ||
-		 readConfigArgs ( argc, argv, config ) ||
-		 readParamArgs ( argc, argv, param ) )
+		readConfigArgs ( argc, argv, config ) ||
+		readParamArgs ( argc, argv, param ) )
 	{
 		printf ( "no config file\n" );
 		return ( __LINE__ );
@@ -148,6 +148,7 @@ int main ( int argc, char ** argv )
 	#endif
 	// END_LOG
 	
+	logVerbose ( "Init shared mem\n" );
 	if ( err = getSharedMem ( ( void ** ) &detection, sizeof ( *detection ), memKey ), err )
 	{
 		logVerbose ( "sharedMem error %d\n", err );
@@ -155,6 +156,7 @@ int main ( int argc, char ** argv )
 		return ( __LINE__ );
 	}
 	
+	logVerbose ( "Start lidar %s\n", port );
 	if ( err = lidarUse ( port, 115200, offsetAngle, detection, &stop ), err )
 	{
 		logVerbose ( "lidar error %d\n", err );
