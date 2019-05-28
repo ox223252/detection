@@ -1,0 +1,18 @@
+[submodule "Configure"]
+	path = Configure
+	url = http://github.com/ox223252/Configure
+[submodule "src/lib/config"]
+	path = src/lib/config
+	url = https://github.com/ox223252/config.git
+[submodule "src/lib/freeOnExit"]
+	path = src/lib/freeOnExit
+	url = https://github.com/ox223252/freeOnExit.git
+[submodule "src/lib/log"]
+	path = src/lib/log
+	url = https://github.com/ox223252/log.git
+[submodule "src/lib/sharedMem"]
+	path = src/lib/sharedMem
+	url = https://github.com/ox223252/sharedMem.git
+[submodule "src/lib/signalHandler"]
+	path = src/lib/signalHandler
+	url = https://github.com/ox223252/signalHandler.git
