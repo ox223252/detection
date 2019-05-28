@@ -66,7 +66,7 @@ int lidarUse ( const char * path, const uint32_t baudRate, const float offsetAng
 
 	while ( !*stop )
 	{
-		float distance = 100.0;
+		float distance = 1000000.0;
 
 		size_t nbEls = 360;
 		rplidar_response_measurement_node_t nodes[ nbEls ];
@@ -119,7 +119,9 @@ int lidarUse ( const char * path, const uint32_t baudRate, const float offsetAng
 				}
 			}
 
-			if ( detection->dir == DIR_NONE )
+			printf ( "%f\r", distance );
+
+			if ( detection->dir != DIR_NONE )
 			{
 				detection->distance = distance;
 			}

@@ -164,6 +164,8 @@ int main ( int argc, char ** argv )
 		return ( __LINE__ );
 	}
 
+	detection->distance = 1000000.0;
+
 	// END_CORE
 	logVerbose ( "code endded\n" );
 	return ( 0 );
